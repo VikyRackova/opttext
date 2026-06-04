@@ -1,14 +1,22 @@
 Package: opttext
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Optimized Text Processing
+Version: 0.0.0.1
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Viktoria", "Račková", email = "viki.rackova@gmail.com", role = c("aut", "cre"))
+Description: This package includes functions that are optimized for large text corpora processing. 
+License: MIT + file LICENSE
 Encoding: UTF-8
+Imports:
+    Rcpp,
+    RcppParallel
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Depends: 
     R (>= 3.5)
 LazyData: true
+LinkingTo:
+    Rcpp,
+    RcppParallel
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

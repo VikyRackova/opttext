@@ -1,0 +1,2 @@
+PKG_CPPFLAGS +=  -IC:/rtools45/mingw64/include
+PKG_LIBS += -LC:/rtools45/mingw64/lib -licuuc -licuin -licudt
