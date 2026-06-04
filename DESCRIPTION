@@ -17,6 +17,8 @@ LazyData: true
 LinkingTo:
     Rcpp,
     RcppParallel
+SystemRequirements: ICU
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+

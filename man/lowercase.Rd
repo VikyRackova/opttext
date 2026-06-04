@@ -20,11 +20,6 @@ to lowercase.
 }
 \details{
 This function is useful for text preprocessing and standardization.
-This function performs ASCII case conversion. While standard English letters
-are converted correctly, Unicode characters with accents or diacritics are
-not fully supported. For example, \code{"HELLO"} is converted to
-\code{"hello"}, but strings containing characters such as \code{Č},
-\code{Š}, \code{Ž}, or \code{Á} may not be converted as expected.
 }
 \examples{
 # Single string
@@ -33,16 +28,6 @@ lowercase("HELLO WORLD")
 # Character vector
 lowercase(c("APPLE", "BaNaNa", "Cherry"))
 
-# Text containing numbers and punctuation
-lowercase("GDP Growth in 2024: +3.5\%")
 
-# Typical text preprocessing
-texts <- c(
-  "The FED Raised Rates",
-  "ECB Holds Steady")
-lowercase(texts)
-
-# Non-ASCII characters are not fully supported
-lowercase("ČESKÁ REPUBLIKA")
 
 }

@@ -27,6 +27,7 @@
 #'
 #' @useDynLib opttext, .registration = TRUE
 #' @export
+#' @importFrom Rcpp evalCpp
 lowercase <- function(texts) {
   if (!is.character(texts)) stop("Input must be a character string or vector")
   if (length(texts) == 0)   stop("Input cannot be empty")
