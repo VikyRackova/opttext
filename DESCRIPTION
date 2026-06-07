@@ -28,4 +28,5 @@ SystemRequirements: ICU, GNU make
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-
+URL: https://github.com/VikyRackova/opttext
+BugReports: https://github.com/VikyRackova/opttext/issues
