@@ -276,3 +276,40 @@ fast_dtm <- function(data,
   )
 }
 
+
+#' Trim a fastDtm Object
+#'
+#' Removes infrequent terms from a fastDtm object.
+#'
+#' @param dtm A fastDtm object.
+#' @param min_docfreq Minimum document frequency.
+#' @param min_termfreq Minimum corpus term frequency.
+#'
+#' @return A trimmed fastDtm object.
+#'
+#' @export
+dtm_trim <- function(dtm,
+                     min_docfreq = 1,
+                     min_termfreq = 1) {
+
+  if (!inherits(dtm, "fastDtm")) {
+    stop("`dtm` must be a fastDtm object.", call. = FALSE)
+  }
+
+  min_docfreq <- .check_positive_integer(min_docfreq, "min_docfreq")
+  min_termfreq <- .check_positive_integer(min_termfreq, "min_termfreq")
+
+  keep <- dtm@document_frequency >= min_docfreq &
+    dtm@term_frequency >= min_termfreq
+
+  mat <- dtm[, keep, drop = FALSE]
+
+  methods::new(
+    "fastDtm",
+    mat,
+    vocabulary = dtm@vocabulary[keep],
+    term_frequency = as.numeric(Matrix::colSums(mat)),
+    document_frequency = as.numeric(Matrix::colSums(mat > 0)),
+    docvars = dtm@docvars
+  )
+}
