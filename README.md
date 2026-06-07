@@ -134,19 +134,7 @@ Variables:
 - Date
 - Text
 
-#### The_Times
-
-Articles from *The Times* discussing government and public
-administration between 2020 and 2025.
-
-``` r
-data("The_Times")
-```
-
-Variables:
-
-- Date
-- Text
+------------------------------------------------------------------------
 
 ## Relationship to other packages
 
