@@ -4,22 +4,27 @@
 \alias{lowercase}
 \title{Convert Text to Lowercase}
 \usage{
-lowercase(text)
+lowercase(texts)
 }
 \arguments{
-\item{text}{A character string or character vector whose elements will be
+\item{texts}{A character string or character vector whose elements will be
 converted to lowercase.}
 }
 \value{
 A character string or character vector of the same length as
-\code{text}, with all alphabetic characters converted to lowercase.
+\code{texts}, with all alphabetic characters converted to lowercase.
 }
 \description{
-Convert all uppercase letters in a character string or character vector
+\code{lowercase()} converts all uppercase letters in a character string or character vector
 to lowercase.
 }
 \details{
-This function is useful for text preprocessing and standardization.
+\code{lowercase()} is designed for efficient text standardization prior to
+tokenization, document-term matrix construction, or other natural language
+processing tasks.
+
+The function preserves the length and ordering of the input vector. Missing
+values (\code{NA}) are retained and returned unchanged.
 }
 \examples{
 # Single string
@@ -28,6 +33,10 @@ lowercase("HELLO WORLD")
 # Character vector
 lowercase(c("APPLE", "BaNaNa", "Cherry"))
 
+# Text containing punctuation
+lowercase("INFLATION, GROWTH, AND EMPLOYMENT")
 
+# Missing values are preserved
+lowercase(c("HELLO", NA))
 
 }
