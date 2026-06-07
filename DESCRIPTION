@@ -7,17 +7,24 @@ Description: This package includes functions that are optimized for large text c
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
+    Matrix,
+    methods,
     Rcpp,
-    RcppParallel
+    RcppParallel,
+    scales,
+    stopwords,
+    stringi,
+    ggplot2
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Depends: 
     R (>= 3.5)
 LazyData: true
+LazyDataCompression: xz
 LinkingTo:
     Rcpp,
     RcppParallel
-SystemRequirements: ICU
+SystemRequirements: ICU, GNU make
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

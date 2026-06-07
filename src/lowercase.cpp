@@ -29,7 +29,7 @@ inline void lower_inplace(std::string& x) {
 
   if (!ascii) {
     icu::UnicodeString u = icu::UnicodeString::fromUTF8(x);
-    u.toLower(icu::Locale::getDefault());
+    u.toLower(icu::Locale::getRoot());
 
     std::string out;
     u.toUTF8String(out);

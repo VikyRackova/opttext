@@ -1,20 +1,21 @@
 #' Convert Text to Lowercase
 #'
-#' Convert all uppercase letters in a character string or character vector
+#' \code{lowercase()} converts all uppercase letters in a character string or character vector
 #' to lowercase.
 #'
-#' @usage
-#' lowercase(text)
-#'
-#' @param text A character string or character vector whose elements will be
+#' @param texts A character string or character vector whose elements will be
 #'   converted to lowercase.
 #'
-#' @return A character string or character vector of the same length as
-#'   \code{text}, with all alphabetic characters converted to lowercase.
-#'
 #' @details
-#' This function is useful for text preprocessing and standardization.
+#' \code{lowercase()} is designed for efficient text standardization prior to
+#' tokenization, document-term matrix construction, or other natural language
+#' processing tasks.
 #'
+#' The function preserves the length and ordering of the input vector. Missing
+#' values (\code{NA}) are retained and returned unchanged.
+#'
+#' @return A character string or character vector of the same length as
+#'   \code{texts}, with all alphabetic characters converted to lowercase.
 #'
 #' @examples
 #' # Single string
@@ -23,11 +24,13 @@
 #' # Character vector
 #' lowercase(c("APPLE", "BaNaNa", "Cherry"))
 #'
+#' # Text containing punctuation
+#' lowercase("INFLATION, GROWTH, AND EMPLOYMENT")
 #'
+#' # Missing values are preserved
+#' lowercase(c("HELLO", NA))
 #'
-#' @useDynLib opttext, .registration = TRUE
 #' @export
-#' @importFrom Rcpp evalCpp
 lowercase <- function(texts) {
   if (!is.character(texts)) stop("Input must be a character string or vector")
   if (length(texts) == 0)   stop("Input cannot be empty")

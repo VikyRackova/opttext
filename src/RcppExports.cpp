@@ -10,6 +10,19 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// fast_dtm_cpp
+Rcpp::List fast_dtm_cpp(Rcpp::CharacterVector text, Rcpp::CharacterVector stopwords, bool remove_stopwords);
+RcppExport SEXP _opttext_fast_dtm_cpp(SEXP textSEXP, SEXP stopwordsSEXP, SEXP remove_stopwordsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type text(textSEXP);
+    Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type stopwords(stopwordsSEXP);
+    Rcpp::traits::input_parameter< bool >::type remove_stopwords(remove_stopwordsSEXP);
+    rcpp_result_gen = Rcpp::wrap(fast_dtm_cpp(text, stopwords, remove_stopwords));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_lowercase
 CharacterVector cpp_lowercase(CharacterVector texts);
 RcppExport SEXP _opttext_cpp_lowercase(SEXP textsSEXP) {
@@ -23,6 +36,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_opttext_fast_dtm_cpp", (DL_FUNC) &_opttext_fast_dtm_cpp, 3},
     {"_opttext_cpp_lowercase", (DL_FUNC) &_opttext_cpp_lowercase, 1},
     {NULL, NULL, 0}
 };
