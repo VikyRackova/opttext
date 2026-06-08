@@ -1,6 +1,6 @@
 #' fastDtm Class
 #'
-#' An S4 class extending \code{\linkS4class{dgCMatrix}} for storing
+#' An S4 class extending \code{\linkS4class{dgCMatrix}{Matrix}} for storing
 #' document-term matrices together with vocabulary statistics and
 #' document-level metadata.
 #'
@@ -29,7 +29,7 @@ setClass(
 #' Creates a sparse document-term matrix directly from pre-cleaned text. The result is
 #' returned as a \code{fastDtm} object.
 #'
-#' A \code{fastDtm} object extends \code{\linkS4class{dgCMatrix}}, so it can
+#' A \code{fastDtm} object extends \code{\linkS4class{dgCMatrix}{Matrix}}, so it can
 #' be used directly with functions that accept sparse document-term matrices,
 #' including \code{\link[topicmodels]{LDA}}.
 #'
@@ -87,11 +87,11 @@ setClass(
 #' }
 #'
 #' @return An object of class \code{fastDtm}, extending
-#'   \code{\linkS4class{dgCMatrix}}. Rows correspond to documents and columns
+#'   \code{\linkS4class{dgCMatrix}{Matrix}}. Rows correspond to documents and columns
 #'   correspond to unique terms sorted alphabetically.
 #'
 #' @seealso
-#' \code{\linkS4class{dgCMatrix}},
+#' \code{\linkS4class{dgCMatrix}{Matrix}},
 #' \code{\link[topicmodels]{LDA}},
 #' \code{\link[stopwords]{stopwords}},
 #' \code{\link[stringi]{stri_detect_charclass}}

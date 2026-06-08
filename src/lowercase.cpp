@@ -1,4 +1,5 @@
 // [[Rcpp::depends(RcppParallel)]]
+
 #include <Rcpp.h>
 #include <RcppParallel.h>
 
