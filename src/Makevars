@@ -1,0 +1,2 @@
+PKG_CPPFLAGS += -I"/usr/local/lib/R/site-library/RcppParallel/include" -DRCPP_PARALLEL_USE_TBB=0
+PKG_LIBS += $(shell "${R_HOME}/bin/Rscript" --vanilla -e "RcppParallel::RcppParallelLibs()")
