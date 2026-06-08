@@ -34,6 +34,30 @@ The package currently provides:
 devtools::install_github("VikyRackova/opttext")
 ```
 
+## Docker
+
+A pre-built Docker image is available on Docker Hub for fully
+reproducible use without any local setup:
+
+``` bash
+docker pull rackovaviktoria/opttext
+```
+
+To verify the installation and run an example:
+
+``` bash
+docker run --rm rackovaviktoria/opttext Rscript -e "
+library(opttext)
+dtm <- fast_dtm(c('hello world', 'foo bar baz', 'hello foo'))
+print(dtm)
+print(dtm@vocabulary)
+print(lowercase(c('Hello WORLD', 'Ünïcödé')))
+"
+```
+
+The image is built on `rocker/r-ver:4.4.0` (R 4.4.0, Ubuntu 22.04) with
+all dependencies pre-installed.
+
 ## Example workflow
 
 The typical workflow consists of preprocessing text, constructing a
@@ -86,8 +110,6 @@ The dataset can be used for testing preprocessing functions,
 benchmarking matrix construction, and demonstrating text-analysis
 workflows.
 
-------------------------------------------------------------------------
-
 ## Relationship to other packages
 
 `opttext` is designed to complement existing text-analysis workflows
@@ -116,8 +138,10 @@ outperformed comparable implementations based on `stringi`.
 workflows. The combined preprocessing pipeline generally outperformed
 comparable workflows based on base R and `quanteda`.
 
-Benchmark script, `inst\benchmark.R`, is included in the repository to
-facilitate transparent comparisons with established alternatives.
+A benchmark script is included at `inst/benchmark.R` to facilitate
+transparent comparisons with established alternatives. Results are
+collected and summarized using `dplyr`, producing a tidy comparison
+table of median and mean execution times across methods.
 
 ## Documentation
 
