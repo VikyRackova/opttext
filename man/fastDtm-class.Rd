@@ -5,7 +5,7 @@
 \alias{fastDtm-class}
 \title{fastDtm Class}
 \description{
-An S4 class extending \code{\linkS4class{dgCMatrix}} for storing
+An S4 class extending \code{\linkS4class{dgCMatrix}{Matrix}} for storing
 document-term matrices together with vocabulary statistics and
 document-level metadata.
 }

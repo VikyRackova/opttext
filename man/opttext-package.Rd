@@ -10,6 +10,14 @@ High-performance text preprocessing functions for NLP workflows,
 implemented with C++ (via \pkg{Rcpp}) and parallel computing
 (via \pkg{RcppParallel}).
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/VikyRackova/opttext}
+  \item Report bugs at \url{https://github.com/VikyRackova/opttext/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Viktoria Račková \email{viki.rackova@gmail.com}
 
