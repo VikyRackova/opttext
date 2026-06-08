@@ -3,6 +3,8 @@ library(opttext)
 library(stringi)
 library(quanteda)
 library(Matrix)
+library(dplyr)
+library(tidyr)
 
 
 Text_short <- rep("THE FED INCREASED INTEREST RATES IN RESPONSE TO INFLATION 2024!!!",100000)
@@ -147,5 +149,23 @@ Benchmark_summary <- list(
 )
 
 Benchmark_summary
+
+# Combine into a tidy data frame for easy comparison
+Benchmark_tidy <- bind_rows(Benchmark_summary, .id = "benchmark") |>
+  select(benchmark, expr, median, mean) |>
+  mutate(
+    median_ms = round(median / 1e6, 2),
+    mean_ms   = round(mean   / 1e6, 2)
+  ) |>
+  select(benchmark, expr, median_ms, mean_ms) |>
+  arrange(benchmark, median_ms)
+
+print(Benchmark_tidy)
+
+# Best method per benchmark
+Benchmark_tidy |>
+  group_by(benchmark) |>
+  slice_min(median_ms, n = 1) |>
+  select(benchmark, winner = expr, median_ms)
 
 
