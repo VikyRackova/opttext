@@ -1,9 +1,8 @@
 Package: opttext
 Title: Optimized Text Processing
 Version: 0.0.0.1
-Authors@R: 
-    person("Viktoria", "Račková", email = "viki.rackova@gmail.com", role = c("aut", "cre"))
-Description: This package includes functions that are optimized for large text corpora processing. 
+Authors@R: person("Viktoria", "Račková", email = "viki.rackova@gmail.com", role = c("aut", "cre"))
+Description: This package includes functions that are optimized for processing large text corpora.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
