@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2026 opttext authors
+Copyright (c) 2026 Viktoria Rackova
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
