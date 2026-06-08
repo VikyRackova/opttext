@@ -14,19 +14,21 @@ plot_doc_lengths(
 )
 }
 \arguments{
-\item{dtm}{A \code{fastDtm} object.}
+\item{dtm}{A \code{fastDtm} object returned by \code{\link{fast_dtm}}.}
 
-\item{bins}{Positive integer. Number of histogram bins.}
+\item{bins}{Positive integer. Number of histogram bins. Defaults to
+\code{30}.}
 
 \item{group}{Optional character string naming a column in \code{@docvars}
-to colour by.}
+to colour by. The column must exist in \code{@docvars}.}
 
 \item{facet}{Logical. When \code{group} is supplied, should groups be shown
-in separate facets?}
+in separate panels (\code{TRUE}) or as overlapping histograms
+(\code{FALSE})? Defaults to \code{FALSE}.}
 
 \item{facet_ncol}{Optional positive integer. Number of facet columns when
-\code{facet = TRUE}. If \code{NULL}, a sensible default is chosen based on
-the number of groups.}
+\code{facet = TRUE}. If \code{NULL}, a sensible default is chosen based
+on the number of groups.}
 
 \item{...}{Additional arguments passed to \code{ggplot2::geom_histogram()}.}
 }
@@ -34,10 +36,11 @@ the number of groups.}
 A \code{ggplot} object.
 }
 \description{
-Displays a histogram of per-document token counts, calculated as row sums of
-the document-term matrix. When \code{group} is supplied, the distribution is
-shown as overlapping semi-transparent histograms. Set \code{facet = TRUE} to
-show groups in separate panels.
+Displays a histogram of per-document token counts, calculated as the row
+sums of the document-term matrix. When \code{group} is supplied, the
+distribution is shown as overlapping semi-transparent histograms coloured
+by group. Set \code{facet = TRUE} to show groups in separate panels
+instead.
 }
 \details{
 The function returns a \code{ggplot} object, so all aesthetic and theme
@@ -61,4 +64,8 @@ plot_doc_lengths(dtm) +
   ggplot2::theme_bw() +
   ggplot2::labs(title = "Custom document length plot")
 
+}
+\seealso{
+\code{\link{fast_dtm}}, \code{\link{plot_top_terms}},
+\code{\link{plot_term_heatmap}}
 }

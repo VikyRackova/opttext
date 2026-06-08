@@ -11,17 +11,26 @@ lowercase(texts)
 converted to lowercase.}
 }
 \value{
-A character string or character vector of the same length as
-\code{texts}, with all alphabetic characters converted to lowercase.
+A character vector of the same length as \code{texts}, with all
+alphabetic characters converted to lowercase. The structure and ordering
+of the input are preserved. \code{NA} elements are returned as \code{NA}.
 }
 \description{
-\code{lowercase()} converts all uppercase letters in a character string or character vector
-to lowercase.
+Converts all uppercase letters in a character string or character vector to
+lowercase using a parallel vocabulary-caching strategy with Unicode-aware
+normalisation via the ICU library.
 }
 \details{
-\code{lowercase()} is designed for efficient text standardization prior to
-tokenization, document-term matrix construction, or other natural language
+\code{lowercase()} is designed for efficient text standardisation prior to
+tokenisation, document-term matrix construction, or other natural language
 processing tasks.
+
+The function uses a two-pass approach: unique tokens are lowercased once and
+cached, and document reconstruction is performed in parallel using
+\pkg{RcppParallel}. For ASCII-only input, a fast bit-flip operation is
+applied. For input containing non-ASCII characters, Unicode-aware
+lowercasing is performed via the ICU library, correctly handling accented
+characters, ligatures, and other Unicode letter forms.
 
 The function preserves the length and ordering of the input vector. Missing
 values (\code{NA}) are retained and returned unchanged.
@@ -33,10 +42,17 @@ lowercase("HELLO WORLD")
 # Character vector
 lowercase(c("APPLE", "BaNaNa", "Cherry"))
 
-# Text containing punctuation
-lowercase("INFLATION, GROWTH, AND EMPLOYMENT")
+# Unicode characters are handled correctly
+lowercase(c("ÜNÏCÖDÉ", "ΕΛΛΗΝΙΚΆ", "ČESKY"))
+
+# Text containing punctuation (preserved)
+lowercase("INFLATION, GROWTH, AND EMPLOYMENT.")
 
 # Missing values are preserved
-lowercase(c("HELLO", NA))
+lowercase(c("HELLO", NA, "WORLD"))
 
+}
+\seealso{
+\code{\link{remove_punctuation}}, \code{\link{remove_numbers}},
+\code{\link{squish_whitespace}}, \code{\link{fast_dtm}}
 }

@@ -7,15 +7,41 @@
 remove_numbers(texts)
 }
 \arguments{
-\item{texts}{Character vector.}
+\item{texts}{A character string or character vector to process.}
 }
 \value{
-Character vector.
+A character vector of the same length as \code{texts}, with all
+digit sequences replaced by a single space.
 }
 \description{
-Removes numeric characters from text.
+Removes all numeric digit sequences from a character string or character
+vector, replacing them with a single space.
+}
+\details{
+Digit sequences are matched using the regular expression \code{[0-9]+} via
+\pkg{stringi} and replaced with a single space. This removes Arabic digit
+sequences but does not affect number words (e.g., "three") or digits in
+other scripts.
+
+Digits are replaced with a space rather than an empty string to avoid
+inadvertently merging adjacent words. Use \code{\link{squish_whitespace}}
+afterwards to collapse any resulting multiple spaces.
 }
 \examples{
-remove_numbers("Inflation increased by 5 percent")
+# Basic usage
+remove_numbers("Inflation increased by 5 percent in 2024")
 
+# Multiple numbers
+remove_numbers("Q1 2024: growth of 3.2 percent")
+
+# Character vector
+remove_numbers(c("GDP grew 2 percent", "No numbers here"))
+
+# Combine with squish_whitespace
+squish_whitespace(remove_numbers("Growth of 3 percent in 2024"))
+
+}
+\seealso{
+\code{\link{lowercase}}, \code{\link{remove_punctuation}},
+\code{\link{squish_whitespace}}, \code{\link{fast_dtm}}
 }

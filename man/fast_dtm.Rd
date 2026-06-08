@@ -23,69 +23,73 @@ the document text. Required when \code{data} is a data frame; ignored when
 \code{data} is a character vector.}
 
 \item{metadata}{Optional character vector naming columns in \code{data} to
-retain as document-level metadata. Ignored when \code{data} is a character
-vector.}
+retain as document-level metadata in the \code{@docvars} slot. Ignored
+when \code{data} is a character vector.}
 
-\item{stopwords}{Logical. Should stopwords be removed? Defaults to
-\code{TRUE}.}
+\item{stopwords}{Logical. Should stopwords be removed before constructing
+the matrix? Defaults to \code{TRUE}.}
 
-\item{language}{Character string specifying the stopword language. Passed to
-\code{stopwords::stopwords()} with \code{source = "snowball"}.
+\item{language}{Character string specifying the stopword language passed to
+\code{\link[stopwords]{stopwords}} with \code{source = "snowball"}.
 Defaults to \code{"en"}.}
 
-\item{remove_punct}{Logical. Should punctuation be removed before constructing
-the document-term matrix? Defaults to \code{FALSE}. If \code{FALSE}, the
-function stops when punctuation is detected.}
+\item{remove_punct}{Logical. Should Unicode punctuation be removed before
+constructing the matrix? Defaults to \code{FALSE}. When \code{FALSE}, the
+function stops with an informative error if punctuation is detected.}
 
-\item{threads}{Integer specifying the number of threads used by
-\pkg{RcppParallel}. If \code{NULL}, the number of threads is determined
-automatically by \pkg{RcppParallel}.}
+\item{threads}{Positive integer specifying the number of threads used by
+\pkg{RcppParallel}. When \code{NULL} (default), the number of threads is
+determined automatically by \pkg{RcppParallel}.}
 }
 \value{
-An object of class \code{fastDtm}, extending
-\code{\linkS4class{dgCMatrix}{Matrix}}. Rows correspond to documents and columns
-correspond to unique terms sorted alphabetically.
+An object of class \code{\link{fastDtm-class}}, extending
+\code{\linkS4class{dgCMatrix}}. Rows correspond to documents and
+columns correspond to unique terms sorted alphabetically.
 }
 \description{
-Creates a sparse document-term matrix directly from pre-cleaned text. The result is
-returned as a \code{fastDtm} object.
+Creates a sparse document-term matrix directly from pre-cleaned text. The
+result is returned as a \code{\link{fastDtm-class}} object, which extends
+\code{\linkS4class{dgCMatrix}} and is compatible with downstream
+sparse-matrix workflows including topic modelling.
 }
 \details{
-A \code{fastDtm} object extends \code{\linkS4class{dgCMatrix}{Matrix}}, so it can
-be used directly with functions that accept sparse document-term matrices,
-including \code{\link[topicmodels]{LDA}}.
-
-\code{fast_dtm()} is optimized for already processed text and avoids
-creating an intermediate tokens object. The input text must satisfy three
-preprocessing conditions:
+\code{fast_dtm()} is optimised for already-cleaned text and avoids creating
+an intermediate token object. The input text must satisfy three
+preprocessing conditions before calling this function:
 
 \itemize{
-\item text must be lowercase;
-\item Unicode punctuation must be removed, unless \code{remove_punct = TRUE};
-\item terms must be separated by whitespace.
+\item All letters must be lowercase.
+\item Unicode punctuation must be removed (unless \code{remove_punct = TRUE}).
+\item Terms must be separated by whitespace.
 }
 
-Unicode validation is performed with \pkg{stringi}. The function stops with
-an informative error if uppercase Unicode letters or Unicode punctuation are
-detected.
+Input validation is performed using \pkg{stringi}. The function stops with
+an informative error if uppercase Unicode letters or punctuation are detected
+and \code{remove_punct = FALSE}.
 
-Missing text values are removed before matrix construction. If any
-\code{NA} documents are removed, a warning reports the number of removed
-documents. Metadata rows are removed accordingly, so the document-term matrix
-and document-level metadata remain aligned.
+Missing text values (\code{NA}) are silently removed before matrix
+construction. A warning is issued reporting the number of removed documents.
+When metadata is supplied, the corresponding rows are also removed so the
+matrix and \code{@docvars} remain aligned.
 
-If \code{stopwords = TRUE}, stopwords are retrieved from the
-\pkg{stopwords} package using the Snowball list for the selected language.
+When \code{stopwords = TRUE}, the Snowball stopword list for the selected
+language is retrieved via \code{\link[stopwords]{stopwords}}.
 
-The returned object contains the sparse matrix and four additional S4 slots:
+The returned \code{fastDtm} object contains the sparse count matrix and four
+additional S4 slots:
 
 \itemize{
-\item \code{@vocabulary}: unique terms corresponding to matrix columns;
-\item \code{@term_frequency}: corpus-wide count of each term;
-\item \code{@document_frequency}: number of documents containing each term;
-\item \code{@docvars}: document-level metadata retained from
-\code{metadata}.
+\item \code{@vocabulary}: unique terms corresponding to matrix columns,
+sorted alphabetically.
+\item \code{@term_frequency}: corpus-wide count of each term.
+\item \code{@document_frequency}: number of documents containing each
+term.
+\item \code{@docvars}: data frame of document-level metadata.
 }
+
+The matrix rows correspond to documents and columns correspond to unique
+terms. Row names are set to the names of the input character vector or the
+row names of the input data frame, when available.
 }
 \examples{
 texts <- c(
@@ -100,19 +104,22 @@ dtm@term_frequency
 dtm@document_frequency
 
 \dontrun{
+# Data frame input with metadata
 df <- data.frame(
-  Text = texts,
-  Date = as.Date(c("2024-01-01", "2024-02-01", "2024-03-01")),
+  Text   = texts,
+  Date   = as.Date(c("2024-01-01", "2024-02-01", "2024-03-01")),
   Source = c("a", "b", "c")
 )
 
 dtm_df <- fast_dtm(
-  data = df,
-  texts = "Text",
-  metadata = c("Date", "Source"))
+  data     = df,
+  texts    = "Text",
+  metadata = c("Date", "Source")
+)
 
 dtm_df@docvars
 
+# Automatic punctuation removal
 text_punct <- c(
   "inflation, increased during the quarter.",
   "economic growth remained stable!"
@@ -123,8 +130,9 @@ fast_dtm(text_punct, remove_punct = TRUE)
 
 }
 \seealso{
-\code{\linkS4class{dgCMatrix}{Matrix}},
-\code{\link[topicmodels]{LDA}},
-\code{\link[stopwords]{stopwords}},
-\code{\link[stringi]{stri_detect_charclass}}
+\code{\link{dtm_trim}} for removing infrequent terms,
+\code{\link{lowercase}} for Unicode-aware lowercasing,
+\code{\link{remove_punctuation}} for removing punctuation,
+\code{\link[topicmodels]{LDA}} for topic modelling,
+\code{\link[stopwords]{stopwords}} for stopword lists.
 }

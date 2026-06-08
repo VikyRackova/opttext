@@ -7,15 +7,42 @@
 remove_punctuation(texts)
 }
 \arguments{
-\item{texts}{Character vector.}
+\item{texts}{A character string or character vector to process.}
 }
 \value{
-Character vector.
+A character vector of the same length as \code{texts}, with all
+Unicode punctuation replaced by a single space.
 }
 \description{
-Removes all Unicode punctuation characters from text.
+Removes all Unicode punctuation characters from a character string or
+character vector, replacing them with a single space.
+}
+\details{
+Punctuation removal is performed using \pkg{stringi} with the Unicode
+property class \code{\\p{P}}, which matches all Unicode punctuation
+characters including ASCII punctuation, quotation marks, brackets,
+dashes, and other punctuation across scripts.
+
+Punctuation characters are replaced with a space rather than an empty
+string to avoid inadvertently merging adjacent words. Use
+\code{\link{squish_whitespace}} afterwards to collapse any resulting
+multiple spaces.
 }
 \examples{
+# Basic usage
 remove_punctuation("Inflation, growth, and employment.")
 
+# Multiple punctuation types
+remove_punctuation("Q1: growth was 'stable' (see table 1).")
+
+# Character vector
+remove_punctuation(c("Hello, world!", "No punctuation here"))
+
+# Combine with squish_whitespace to clean up extra spaces
+squish_whitespace(remove_punctuation("Hello, world!"))
+
+}
+\seealso{
+\code{\link{lowercase}}, \code{\link{remove_numbers}},
+\code{\link{squish_whitespace}}, \code{\link{fast_dtm}}
 }

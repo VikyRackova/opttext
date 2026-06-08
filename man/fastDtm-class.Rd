@@ -5,19 +5,28 @@
 \alias{fastDtm-class}
 \title{fastDtm Class}
 \description{
-An S4 class extending \code{\linkS4class{dgCMatrix}{Matrix}} for storing
+An S4 class extending \code{\linkS4class{dgCMatrix}} for storing
 document-term matrices together with vocabulary statistics and
 document-level metadata.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{vocabulary}}{Character vector of unique terms.}
+\item{\code{vocabulary}}{Character vector of unique terms corresponding to matrix
+columns, sorted alphabetically.}
 
-\item{\code{term_frequency}}{Corpus-wide term frequencies.}
+\item{\code{term_frequency}}{Numeric vector of corpus-wide term frequencies. Each
+element gives the total count of the corresponding term across all
+documents.}
 
-\item{\code{document_frequency}}{Number of documents containing each term.}
+\item{\code{document_frequency}}{Numeric vector giving the number of documents in
+which each term appears at least once.}
 
-\item{\code{docvars}}{Data frame of document-level metadata.}
+\item{\code{docvars}}{Data frame of document-level metadata retained from the
+\code{metadata} argument of \code{\link{fast_dtm}}. An empty data frame
+when no metadata was supplied.}
 }}
 
+\seealso{
+\code{\link{fast_dtm}}, \code{\link{dtm_trim}}
+}

@@ -66,14 +66,18 @@ utils::globalVariables(c("frequency", "period", "rel_freq", "term", "term_ord"))
 #' or \code{+ ggplot2::scale_fill_viridis_d(option = "plasma")}.
 #'
 #' @param dtm A \code{fastDtm} object returned by \code{\link{fast_dtm}}.
-#' @param n Positive integer. Number of top terms to display.
+#' @param n Positive integer. Number of top terms to display. Defaults to
+#'   \code{20}.
 #' @param group Optional character string naming a column in \code{@docvars}
-#'   to facet by.
+#'   to facet by. The column must exist in \code{@docvars}.
 #' @param facet_ncol Number of facet columns when \code{group} is supplied.
-#' If \code{NULL}, a sensible default is chosen based on the number of groups.
+#'   If \code{NULL}, a sensible default is chosen based on the number of groups.
 #' @param ... Additional arguments passed to \code{ggplot2::geom_col()}.
 #'
 #' @return A \code{ggplot} object.
+#'
+#' @seealso \code{\link{fast_dtm}}, \code{\link{dtm_trim}},
+#'   \code{\link{plot_doc_lengths}}, \code{\link{plot_term_heatmap}}
 #'
 #' @examples
 #' text <- c(
@@ -203,27 +207,33 @@ plot_top_terms <- function(dtm,
 
 #' Plot the Distribution of Document Lengths
 #'
-#' Displays a histogram of per-document token counts, calculated as row sums of
-#' the document-term matrix. When \code{group} is supplied, the distribution is
-#' shown as overlapping semi-transparent histograms. Set \code{facet = TRUE} to
-#' show groups in separate panels.
+#' Displays a histogram of per-document token counts, calculated as the row
+#' sums of the document-term matrix. When \code{group} is supplied, the
+#' distribution is shown as overlapping semi-transparent histograms coloured
+#' by group. Set \code{facet = TRUE} to show groups in separate panels
+#' instead.
 #'
 #' The function returns a \code{ggplot} object, so all aesthetic and theme
 #' adjustments can be added with \code{+}, for example:
 #' \code{+ ggplot2::theme_bw()} or \code{+ ggplot2::scale_fill_brewer()}.
 #'
-#' @param dtm A \code{fastDtm} object.
-#' @param bins Positive integer. Number of histogram bins.
+#' @param dtm A \code{fastDtm} object returned by \code{\link{fast_dtm}}.
+#' @param bins Positive integer. Number of histogram bins. Defaults to
+#'   \code{30}.
 #' @param group Optional character string naming a column in \code{@docvars}
-#'   to colour by.
+#'   to colour by. The column must exist in \code{@docvars}.
 #' @param facet Logical. When \code{group} is supplied, should groups be shown
-#'   in separate facets?
+#'   in separate panels (\code{TRUE}) or as overlapping histograms
+#'   (\code{FALSE})? Defaults to \code{FALSE}.
 #' @param facet_ncol Optional positive integer. Number of facet columns when
-#'   \code{facet = TRUE}. If \code{NULL}, a sensible default is chosen based on
-#'   the number of groups.
+#'   \code{facet = TRUE}. If \code{NULL}, a sensible default is chosen based
+#'   on the number of groups.
 #' @param ... Additional arguments passed to \code{ggplot2::geom_histogram()}.
 #'
 #' @return A \code{ggplot} object.
+#'
+#' @seealso \code{\link{fast_dtm}}, \code{\link{plot_top_terms}},
+#'   \code{\link{plot_term_heatmap}}
 #'
 #' @examples
 #' text <- c(
@@ -375,6 +385,9 @@ plot_doc_lengths <- function(dtm,
 #' @param ... Additional arguments passed to \code{ggplot2::geom_tile()}.
 #'
 #' @return A \code{ggplot} object.
+#'
+#' @seealso \code{\link{fast_dtm}}, \code{\link{plot_top_terms}},
+#'   \code{\link{plot_doc_lengths}}
 #'
 #' @examples
 #' df <- data.frame(

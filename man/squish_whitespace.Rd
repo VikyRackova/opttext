@@ -7,16 +7,49 @@
 squish_whitespace(texts)
 }
 \arguments{
-\item{texts}{Character vector.}
+\item{texts}{A character string or character vector to process.}
 }
 \value{
-Character vector.
+A character vector of the same length as \code{texts}, with leading
+and trailing whitespace removed and internal whitespace collapsed to a
+single space.
 }
 \description{
-Removes leading and trailing whitespace and converts repeated
-whitespace to a single space.
+Removes leading and trailing whitespace and collapses all internal sequences
+of whitespace to a single space.
+}
+\details{
+Whitespace normalisation is performed in two steps using \pkg{stringi}:
+leading and trailing whitespace is removed with
+\code{\link[stringi]{stri_trim_both}}, then internal whitespace sequences
+(spaces, tabs, newlines) are collapsed to a single space using a regex
+replacement.
+
+This function is particularly useful as a final cleaning step after
+\code{\link{remove_punctuation}} or \code{\link{remove_numbers}}, both of
+which replace matched characters with a space and may leave multiple
+consecutive spaces.
 }
 \examples{
+# Collapse internal spaces
 squish_whitespace("inflation    growth   employment")
 
+# Remove leading and trailing whitespace
+squish_whitespace("  hello world  ")
+
+# Typical use after remove_punctuation
+squish_whitespace(remove_punctuation("Inflation, growth, and employment."))
+
+# Full preprocessing pipeline
+texts <- c("  INFLATION, Increased 5\%  ", "GROWTH remained stable in 2024.")
+texts |>
+  lowercase() |>
+  remove_punctuation() |>
+  remove_numbers() |>
+  squish_whitespace()
+
+}
+\seealso{
+\code{\link{lowercase}}, \code{\link{remove_punctuation}},
+\code{\link{remove_numbers}}, \code{\link{fast_dtm}}
 }

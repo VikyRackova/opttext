@@ -9,10 +9,11 @@ plot_top_terms(dtm, n = 20L, group = NULL, facet_ncol = NULL, ...)
 \arguments{
 \item{dtm}{A \code{fastDtm} object returned by \code{\link{fast_dtm}}.}
 
-\item{n}{Positive integer. Number of top terms to display.}
+\item{n}{Positive integer. Number of top terms to display. Defaults to
+\code{20}.}
 
 \item{group}{Optional character string naming a column in \code{@docvars}
-to facet by.}
+to facet by. The column must exist in \code{@docvars}.}
 
 \item{facet_ncol}{Number of facet columns when \code{group} is supplied.
 If \code{NULL}, a sensible default is chosen based on the number of groups.}
@@ -51,4 +52,8 @@ plot_top_terms(dtm, fill = "grey40") +
   ggplot2::theme_bw() +
   ggplot2::labs(title = "Custom title")
 
+}
+\seealso{
+\code{\link{fast_dtm}}, \code{\link{dtm_trim}},
+\code{\link{plot_doc_lengths}}, \code{\link{plot_term_heatmap}}
 }

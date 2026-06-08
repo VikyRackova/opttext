@@ -75,3 +75,7 @@ plot_term_heatmap(dtm, date = "date") +
   ggplot2::labs(title = "Custom heatmap")
 
 }
+\seealso{
+\code{\link{fast_dtm}}, \code{\link{plot_top_terms}},
+\code{\link{plot_doc_lengths}}
+}

@@ -1,8 +1,58 @@
 #' opttext: Optimised Text Preprocessing
 #'
-#' High-performance text preprocessing functions for NLP workflows,
-#' implemented with C++ (via \pkg{Rcpp}) and parallel computing
-#' (via \pkg{RcppParallel}).
+#' High-performance text preprocessing and document-term matrix construction
+#' for natural language processing workflows. Core functions are implemented in
+#' C++ via \pkg{Rcpp} and use parallel processing via \pkg{RcppParallel}, with
+#' Unicode-aware text normalisation provided by the ICU library.
+#'
+#' @section Preprocessing functions:
+#' \itemize{
+#'   \item \code{\link{lowercase}} — parallel Unicode-aware lowercasing.
+#'   \item \code{\link{remove_punctuation}} — removes Unicode punctuation.
+#'   \item \code{\link{remove_numbers}} — removes numeric characters.
+#'   \item \code{\link{squish_whitespace}} — normalises whitespace.
+#' }
+#'
+#' @section Matrix construction and trimming:
+#' \itemize{
+#'   \item \code{\link{fast_dtm}} — constructs a sparse document-term matrix
+#'     directly from a character vector or data frame.
+#'   \item \code{\link{dtm_trim}} — removes infrequent terms from a
+#'     \code{fastDtm} object.
+#' }
+#'
+#' @section Visualisation:
+#' \itemize{
+#'   \item \code{\link{plot_top_terms}} — bar chart of the most frequent terms.
+#'   \item \code{\link{plot_doc_lengths}} — histogram of document lengths.
+#'   \item \code{\link{plot_term_heatmap}} — term-frequency heatmap over time.
+#' }
+#'
+#' @section S4 class:
+#' \code{\link{fastDtm-class}} — an S4 class extending
+#' \code{\link[Matrix]{dgCMatrix-class}} that stores the sparse matrix together
+#' with vocabulary statistics and document-level metadata.
+#'
+#' @section Data:
+#' \code{\link{FED_Minutes}} — Federal Open Market Committee meeting minutes
+#' from March 1994 to November 2024, included for benchmarking and examples.
+#'
+#' @section Typical workflow:
+#' \preformatted{
+#' library(opttext)
+#'
+#' texts <- c(
+#'   "Inflation increased during this quarter.",
+#'   "Economic growth remained stable.",
+#'   "Inflation growth belongs to important indicators."
+#' )
+#'
+#' clean  <- lowercase(remove_punctuation(texts))
+#' dtm    <- fast_dtm(clean)
+#' dtm_sm <- dtm_trim(dtm, min_docfreq = 2, min_termfreq = 2)
+#'
+#' plot_top_terms(dtm_sm)
+#' }
 #'
 #' @keywords internal
 #' @importFrom Rcpp evalCpp

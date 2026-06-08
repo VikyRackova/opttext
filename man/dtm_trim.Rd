@@ -7,15 +7,59 @@
 dtm_trim(dtm, min_docfreq = 1, min_termfreq = 1)
 }
 \arguments{
-\item{dtm}{A fastDtm object.}
+\item{dtm}{A \code{fastDtm} object returned by \code{\link{fast_dtm}}.}
 
-\item{min_docfreq}{Minimum document frequency.}
+\item{min_docfreq}{Positive integer. Minimum number of documents a term must
+appear in to be retained. Defaults to \code{1} (no filtering by document
+frequency).}
 
-\item{min_termfreq}{Minimum corpus term frequency.}
+\item{min_termfreq}{Positive integer. Minimum corpus-wide count a term must
+have to be retained. Defaults to \code{1} (no filtering by term
+frequency).}
 }
 \value{
-A trimmed fastDtm object.
+A \code{\link{fastDtm-class}} object with the same number of rows
+(documents) as \code{dtm} but with infrequent terms removed from the
+columns.
 }
 \description{
-Removes infrequent terms from a fastDtm object.
+Removes infrequent terms from a \code{\link{fastDtm-class}} object by
+applying minimum document-frequency and term-frequency thresholds.
+}
+\details{
+A term is retained only if it satisfies both thresholds simultaneously. All
+S4 slots are updated to reflect the trimmed matrix:
+
+\itemize{
+\item \code{@vocabulary}: updated to the retained terms.
+\item \code{@term_frequency}: recomputed from the trimmed matrix.
+\item \code{@document_frequency}: recomputed from the trimmed matrix.
+\item \code{@docvars}: unchanged; rows correspond to the same documents.
+}
+
+Trimming is useful for removing noise before topic modelling or other
+sparse-matrix methods, and for reducing memory usage on large corpora.
+}
+\examples{
+texts <- c(
+  "inflation increased during the quarter",
+  "economic growth remained stable",
+  "inflation growth important indicators"
+)
+
+dtm <- fast_dtm(texts)
+
+# Retain only terms appearing in at least 2 documents
+dtm_trim(dtm, min_docfreq = 2)
+
+# Retain only terms with a corpus frequency of at least 2
+dtm_trim(dtm, min_termfreq = 2)
+
+# Apply both thresholds simultaneously
+dtm_trim(dtm, min_docfreq = 2, min_termfreq = 2)
+
+}
+\seealso{
+\code{\link{fast_dtm}} for constructing the matrix,
+\code{\link{plot_top_terms}} for visualising term frequencies.
 }
