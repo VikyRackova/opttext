@@ -1,0 +1,10 @@
+.git
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rcheck
+renv/library
+data-raw
+src/*.o
+src/*.dll
