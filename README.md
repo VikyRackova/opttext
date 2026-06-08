@@ -116,7 +116,7 @@ outperformed comparable implementations based on `stringi`.
 workflows. The combined preprocessing pipeline generally outperformed
 comparable workflows based on base R and `quanteda`.
 
-Benchmark script, `benchmark.R`, is included in the repository to
+Benchmark script, `inst\benchmark.R`, is included in the repository to
 facilitate transparent comparisons with established alternatives.
 
 ## Documentation

@@ -80,7 +80,7 @@ For example, `lowercase()` performs the same type of text normalization commonly
 
 In benchmark tests using the FED_Minutes dataset, `fast_dtm()` substantially outperformed a comparable `quanteda::tokens() + quanteda::dfm()` workflow when constructing sparse document-term matrices directly from character vectors. Performance gains for preprocessing tasks depend on the structure and size of the input data. In the included benchmarks, `opttext::lowercase()` outperformed base R's `tolower()`, while `stringi::stri_trans_tolower()` remained faster on long real-world documents. `remove_punctuation()` outperformed comparable implementations based on `stringi`. `remove_numbers()` performed similarly to equivalent `stringi` workflows. The combined preprocessing pipeline generally outperformed comparable workflows based on base R and `quanteda`. 
 
-Benchmark script, `benchmark.R`, is included in the repository to facilitate transparent comparisons with established alternatives.
+Benchmark script, `inst\benchmark.R`, is included in the repository to facilitate transparent comparisons with established alternatives.
 
 ## Documentation
 
